@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bruno Stersa · Portfólio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE: a design studio's monograph, black and white, quiet confidence, motion that feels edited not decorative
+   IDEA: a gallery wall: big type on black, real product screens hung like prints that rise into place as you walk past
+   PICTURE: hero of floating real screens that drift with the cursor, over a black field with giant type
+   COLOUR and TYPE: pure black, paper white, greys only; Inter Tight display, Instrument Serif italic for a few spoken words, Inter text
+   LAYOUT: black hero, marquee, sticky case spreads, greyscale site wall, black "how I build" band, light about, black closing */
+:root{color-scheme:light dark;
+--bg:light-dark(#fafafa,#0b0b0b);--ink:light-dark(#0b0b0b,#f2f2f2);--mute:light-dark(#6b6b6b,#9a9a9a);
+--line:light-dark(#e3e3e3,#262626);--card:light-dark(#ffffff,#141414);--soft:light-dark(#f0f0f0,#121212);
+--shadow:light-dark(rgba(0,0,0,.16),rgba(0,0,0,.6));
+--blk:#0b0b0b;--wht:#f4f4f2;--ease:cubic-bezier(.2,.7,.1,1)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{scroll-padding-top:72px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,sans-serif;overflow-x:clip;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+h1,h2,h3{font-family:"Inter Tight",Inter,sans-serif;font-weight:600;letter-spacing:-.035em;line-height:1.02;margin:0;text-wrap:balance}
+h2{font-size:clamp(40px,6vw,84px)}
+h3{font-size:22px;letter-spacing:-.02em;line-height:1.2}
+em,.serif{font-family:"Instrument Serif",Georgia,serif;font-style:italic;font-weight:400;letter-spacing:-.01em}
+p{margin:0 0 14px;max-width:62ch}
+.wrap{max-width:1280px;margin:0 auto}
+.band{padding:clamp(64px,9vw,140px) max(5vw,18px)}
+.dark{background:var(--blk);color:var(--wht);--ink:var(--wht);--mute:#9a9a9a;--line:#262626;--card:#141414}
+.mute{color:var(--mute)}
+.kicker{font-size:14px;color:var(--mute);margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.kicker::before{content:"";width:28px;height:1px;background:currentColor}
+
+/* progress + nav */
+#bar{position:fixed;top:0;left:0;height:2px;width:100%;transform-origin:0 50%;transform:scaleX(0);background:#fff;z-index:20;mix-blend-mode:difference}
+nav{position:fixed;inset:0 0 auto;z-index:10;mix-blend-mode:difference;color:#fff}
+nav{padding:14px max(5vw,18px)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{font-family:"Inter Tight",sans-serif;font-weight:600;font-size:19px;letter-spacing:-.02em;text-decoration:none;min-height:44px;display:inline-flex;align-items:center}
+.links{display:flex;gap:2px;flex-wrap:wrap}
+.links a{text-decoration:none;padding:10px 12px;font-size:15px;min-height:44px;display:inline-flex;align-items:center;position:relative}
+.links a::after{content:"";position:absolute;left:12px;right:12px;bottom:10px;height:1px;background:currentColor;transform:scaleX(0);transform-origin:right;transition:transform .4s var(--ease)}
+.links a:hover::after,.links a:focus-visible::after{transform:scaleX(1);transform-origin:left}
+.links a:focus-visible{outline:2px solid #fff;outline-offset:2px}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 26px;border-radius:99px;text-decoration:none;font-weight:500;background:var(--ink);color:var(--bg);border:1.5px solid var(--ink);position:relative;overflow:hidden;isolation:isolate;transition:color .4s var(--ease)}
+.btn::before{content:"";position:absolute;inset:0;background:var(--bg);transform:translateY(101%);transition:transform .45s var(--ease);z-index:-1;border-radius:inherit}
+.btn:hover::before{transform:none}.btn:hover{color:var(--ink)}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.ghost::before{background:var(--ink)}.btn.ghost:hover{color:var(--bg)}
+.btn:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
+.btn span{transition:transform .4s var(--ease)}.btn:hover span{transform:translateX(4px)}
+
+/* hero */
+.hero{min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding-top:110px;position:relative;overflow:hidden}
+.hero .wrap{width:100%;position:relative;z-index:2}
+.hero h1{font-size:clamp(48px,9.6vw,150px);letter-spacing:-.05em;line-height:.92}
+.line{display:block;overflow:hidden;padding-bottom:.04em}
+.line>span{display:inline-block;transform:translateY(110%);animation:up 1.1s var(--ease) forwards}
+.line:nth-child(2)>span{animation-delay:.12s}.line:nth-child(3)>span{animation-delay:.24s}
+@keyframes up{to{transform:none}}
+.herofoot{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:32px;align-items:end;margin-top:clamp(28px,4vw,56px);opacity:0;animation:fade 1s .6s var(--ease) forwards}
+@keyframes fade{to{opacity:1}}
+@keyframes dim{to{opacity:.55}}
+.lede{font-size:clamp(17px,1.5vw,20px);color:#bdbdbd;max-width:46ch;margin:0}
+.herofoot .cta{display:flex;gap:12px;flex-wrap:wrap;justify-content:flex-end}
+.dark .btn{background:var(--wht);color:var(--blk);border-color:var(--wht);--bg:var(--blk);--ink:var(--wht)}
+.dark .btn::before{background:var(--blk)}.dark .btn:hover{color:var(--wht)}
+.dark .btn.ghost{background:transparent;color:var(--wht)}.dark .btn.ghost::before{background:var(--wht)}.dark .btn.ghost:hover{color:var(--blk)}
+.float{position:absolute;inset:0;z-index:1;pointer-events:none}
+.float img{position:absolute;border-radius:10px;box-shadow:0 40px 80px -30px rgba(0,0,0,.9);opacity:0;animation:dim 1.4s var(--ease) forwards;will-change:transform;filter:grayscale(1) contrast(1.05)}
+.float .f1{width:min(30vw,420px);right:4vw;top:12%;animation-delay:.4s}
+.float .f2{width:min(22vw,300px);right:30vw;top:20%;animation-delay:.6s;opacity:0}
+.float .f3{width:min(24vw,330px);right:14vw;top:44%;animation-delay:.8s}
+.hero::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(11,11,11,.15) 0%,rgba(11,11,11,.55) 55%,var(--blk) 92%);pointer-events:none}
+.stats{display:flex;gap:clamp(24px,4vw,56px);flex-wrap:wrap;margin-top:28px;padding-top:24px;border-top:1px solid #262626}
+.stats b{display:block;font-family:"Inter Tight",sans-serif;font-size:clamp(30px,3.4vw,44px);font-weight:600;letter-spacing:-.04em;line-height:1}
+.stats span{font-size:14px;color:#9a9a9a}
+
+/* marquee */
+.marquee{overflow:hidden;border-block:1px solid var(--line);padding:22px 0;background:var(--bg)}
+.track{display:flex;gap:48px;width:max-content;animation:slide 40s linear infinite}
+.track span{font-family:"Inter Tight",sans-serif;font-size:clamp(22px,2.6vw,34px);letter-spacing:-.03em;white-space:nowrap;display:flex;align-items:center;gap:48px}
+.track span::after{content:"✦";font-size:.5em;color:var(--mute)}
+.track span:nth-child(even){font-family:"Instrument Serif",serif;font-style:italic}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(40px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
+.rv.in{opacity:1;transform:none}
+.clip{clip-path:inset(12% 6% 12% 6% round 12px);transition:clip-path 1.2s var(--ease)}
+.clip.in{clip-path:inset(0 0 0 0 round 12px)}
+
+/* section head */
+.head{display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap;margin-bottom:clamp(40px,6vw,80px)}
+.head p{margin:0;max-width:40ch;color:var(--mute)}
+
+/* cases */
+.case{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.3fr);gap:clamp(28px,5vw,80px);padding-block:clamp(48px,7vw,110px);border-top:1px solid var(--line)}
+.case .txt{position:sticky;top:96px;align-self:start}
+.case h3{font-size:clamp(40px,5vw,72px);letter-spacing:-.045em;line-height:.95;margin:6px 0 18px}
+.role{font-size:14px;color:var(--mute)}
+.meta{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 20px}
+.tag{font-size:13px;padding:5px 12px;border-radius:99px;border:1px solid var(--line)}
+dl{margin:22px 0 0;display:grid;gap:16px}
+dt{font-weight:600;font-size:14px}
+dd{margin:3px 0 0;color:var(--mute);font-size:15.5px;max-width:58ch}
+.result{margin-top:26px;padding:22px 24px;border-radius:14px;background:var(--ink);color:var(--bg)}
+.result b{font-family:"Inter Tight",sans-serif;font-size:clamp(26px,2.6vw,34px);letter-spacing:-.035em;display:block;line-height:1.05;margin-bottom:6px}
+.result span{font-size:14px;opacity:.75}
+.extlink{display:inline-flex;margin-top:20px;font-weight:500;min-height:44px;align-items:center;gap:8px;text-decoration:none;border-bottom:1px solid currentColor}
+.shots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.shots figure{margin:0}
+.shots .wide{grid-column:1/-1}
+.shots img{width:100%;display:block;border-radius:12px;border:1px solid var(--line);background:#fff;transition:transform .8s var(--ease)}
+.shots figure:hover img{transform:scale(1.015)}
+.phones .ph{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;padding:28px 6%;background:var(--soft);border-radius:12px}
+.phones .ph img{border:0;background:transparent}
+.phones:hover img{transform:none}
+figcaption{font-size:13px;color:var(--mute);margin-top:10px}
+
+/* lightbox */
+.shots img{cursor:zoom-in}
+#lb{position:fixed;inset:0;z-index:50;background:#080808;display:none;align-items:center;justify-content:center;padding:56px 16px 24px;cursor:zoom-out}
+#lb.on{display:flex;animation:fade .3s var(--ease)}
+#lb img{max-width:100%;max-height:100%;border-radius:10px;object-fit:contain;background:#fff}
+#lb button{position:absolute;top:10px;right:10px;width:44px;height:44px;border-radius:50%;border:1px solid #444;background:transparent;color:#fff;font-size:20px;cursor:pointer}
+#lb p{position:absolute;bottom:10px;left:16px;right:16px;color:#bbb;font-size:14px;text-align:center;margin:0;max-width:none}
+@media(max-width:600px){#lb{padding:64px 0 72px;overflow:auto;align-items:center;justify-content:flex-start}#lb img{border-radius:0;max-width:none;max-height:none;width:100vw}#lb img{flex:none}#lb.land img{width:220vw}#lb button{position:fixed}#lb p{position:fixed}}
+
+/* sites */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+.chips button{font:inherit;font-size:15px;min-height:44px;padding:0 18px;border-radius:99px;border:1px solid var(--line);background:transparent;color:var(--ink);cursor:pointer;transition:background .3s,color .3s}
+.chips button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chips button:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,290px),1fr));gap:28px 22px}
+.site{text-decoration:none;display:block}
+.site:focus-visible{outline:2px solid var(--ink);outline-offset:6px;border-radius:12px}
+.frame{border-radius:10px;overflow:hidden;border:1px solid var(--line);background:var(--card)}
+.frame img{display:block;width:100%;aspect-ratio:684/422;object-fit:cover;filter:grayscale(1);transition:filter .6s var(--ease),transform .8s var(--ease)}
+.site:hover .frame img,.site:focus-visible .frame img{filter:none;transform:scale(1.04)}
+.site .cap{margin-top:12px;font-size:15px}
+.site .cap strong{display:block;font-weight:600;overflow-wrap:anywhere}
+.site .cap span{display:block;color:var(--mute);font-size:14px}
+.site.hide{display:none}
+
+/* prototypes */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,360px),1fr));gap:0;border-top:1px solid var(--line);border-left:1px solid var(--line)}
+.proto{background:var(--bg);display:flex;flex-direction:column;border-right:1px solid var(--line);border-bottom:1px solid var(--line);transition:background .5s var(--ease),color .5s var(--ease)}
+.proto:hover{background:var(--ink);color:var(--bg);--mute:#9a9a9a;--line:#333;--card:#1a1a1a}
+.proto svg{display:block;width:100%;height:auto}
+.proto .in{padding:6px 28px 30px}
+.proto h3{font-size:26px;margin:4px 0 8px}
+.proto p{color:var(--mute);font-size:15px;margin:0}
+.proto ul{margin:12px 0 0;padding-left:18px;color:var(--mute);font-size:14.5px}
+.proto li{margin:4px 0}
+
+/* how I build */
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:12px 14px;margin-bottom:56px}
+.flow span{padding:14px 24px;border-radius:99px;border:1px solid #333;font-weight:500;white-space:nowrap;transition:background .4s,color .4s}
+.flow span.hot{background:var(--wht);color:var(--blk);border-color:var(--wht)}
+.flow i{font-style:normal;color:#666}
+.pillars{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-top:1px solid #262626}
+.pillar{padding:36px 36px 40px 0;border-bottom:1px solid #262626}
+.pillar:nth-child(odd){border-right:1px solid #262626}
+.pillar:nth-child(even){padding-left:36px;padding-right:0}
+.pillar h3{font-size:clamp(28px,2.8vw,38px);letter-spacing:-.04em;margin-bottom:14px}
+.pillar p{color:#a8a8a8;font-size:15.5px}
+.pillar ul{margin:10px 0 0;padding:0;list-style:none;font-size:15px}
+.pillar li{padding:9px 0;border-top:1px solid #1f1f1f;display:flex;gap:10px}
+.pillar li::before{content:"→";color:#666}
+.tools{margin-top:40px;display:flex;flex-wrap:wrap;gap:8px}
+.tools span{font-size:14px;padding:8px 14px;border:1px solid #333;border-radius:99px;color:#cfcfcf}
+
+/* about */
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(36px,6vw,100px)}
+.steps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 24px;margin-top:34px}
+.step{border-top:1px solid var(--ink);padding-top:16px}
+.step h3{font-size:26px;margin-bottom:6px}
+.step p{font-size:15px;color:var(--mute)}
+.tl{margin-top:34px}
+.tl div{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;padding:18px 0;border-top:1px solid var(--line);transition:padding .4s var(--ease)}
+.tl div:hover{padding-left:10px}
+.tl b{font-weight:600}
+.tl span{font-size:14px;color:var(--mute);text-align:right}
+.tl small{display:block;color:var(--mute);font-size:14px}
+.tl .seal{display:inline-flex;align-items:center;gap:6px;font-style:normal;font-size:12px;font-weight:500;padding:4px 10px;margin:0 0 4px 8px;border-radius:99px;border:1px solid var(--ink);background:transparent;color:var(--ink);vertical-align:middle}
+.tl .star{font-style:normal;font-size:14px;margin-left:4px}
+.tl .hl{border:1px solid var(--ink);border-radius:14px;padding:20px 18px;margin:10px 0}
+.tl .hl:hover{padding-left:24px}
+.tl .hl+div{border-top-color:transparent}
+
+/* footer */
+footer h2{font-size:clamp(52px,10vw,160px);letter-spacing:-.055em;line-height:.9}
+footer .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:40px}
+footer .fine{margin-top:80px;padding-top:24px;border-top:1px solid #262626;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:14px;color:#9a9a9a}
+
+@media(max-width:900px){
+  .case,.two,.herofoot{grid-template-columns:1fr}
+  .case .txt{position:static}
+  .herofoot .cta{justify-content:flex-start}
+  .float .f2{display:none}
+  .float .f1{width:52vw;top:10%;right:-6vw;opacity:.5}
+  .float .f3{width:44vw;top:28%;right:24vw}
+}
+@media(max-width:700px){
+  .pillars{grid-template-columns:1fr}
+  .pillar,.pillar:nth-child(even){padding:28px 0;border-right:0}
+}
+@media(max-width:600px){
+  .shots,.steps{grid-template-columns:1fr}
+  .links a.opt{display:none}
+  .float{display:none}
+  .tl div{grid-template-columns:1fr}.tl span{text-align:left}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .line>span{transform:none}.herofoot{opacity:1}.float img{opacity:.55}
+  .rv{opacity:1;transform:none}.clip{clip-path:none}
+  .track{animation:none}
+}
+</style>
+</head>
+<body>
+<div id="bar" aria-hidden="true"></div>
+<div id="lb" role="dialog" aria-modal="true" aria-label="Tela ampliada"><button type="button" aria-label="Fechar">✕</button><img alt=""><p></p></div>
+
+<nav><div class="wrap">
+  <a class="brand" href="#topo">Bruno Stersa</a>
+  <div class="links">
+    <a href="#cases">Cases</a>
+    <a href="#sites" class="opt">Sites</a>
+    <a href="#como" class="opt">Como construo</a>
+    <a href="#sobre">Sobre</a>
+    <a href="#contato">Contato</a>
+  </div>
+</div></nav>
+
+<header class="band dark hero" id="topo">
+  <div class="float" aria-hidden="true">
+    <img class="f1" src="img/p-crm.jpg" alt="" data-d="18">
+    <img class="f2" src="img/k-agente.jpg" alt="" data-d="34">
+    <img class="f3" src="img/pc-resultado.jpg" alt="" data-d="26">
+  </div>
+  <div class="wrap">
+    <div class="kicker">Product Designer · UX/UI · Produto com IA</div>
+    <h1><span class="line"><span>Do dado do</span></span><span class="line"><span>cliente à <em>interface.</em></span></span></h1>
+    <div class="herofoot">
+      <div>
+        <p class="lede">Mais de 15 anos desenhando produtos digitais. Desenho no Figma, prototipo com IA até virar produto navegável e penso a arquitetura do produto inteiro. A voz do cliente decide o que entra.</p>
+        <div class="stats">
+          <div><b data-n="15" data-s="+">15+</b><span>anos de produto digital</span></div>
+          <div><b data-n="60" data-s="+">60+</b><span>telas num só protótipo</span></div>
+          <div><b data-n="2" data-s="">2</b><span>produtos próprios no ar</span></div>
+        </div>
+      </div>
+      <div class="cta">
+        <a class="btn" href="#cases">Ver os cases <span>↓</span></a>
+        <a class="btn ghost" href="https://www.linkedin.com/in/brunostersa/">LinkedIn <span>↗</span></a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="marquee" aria-hidden="true"><div class="track" id="track"></div></div>
+
+<section class="band" id="cases"><div class="wrap">
+  <div class="head rv">
+    <h2>Cases <em>selecionados</em></h2>
+    <p>Telas reais, capturadas dos produtos e protótipos.</p>
+  </div>
+
+  <article class="case">
+    <div class="txt rv">
+      <div class="role">Founder &amp; Product Designer · 2025 até hoje</div>
+      <h3>Klientti</h3>
+      <div class="meta"><span class="tag">SaaS</span><span class="tag">Dashboard</span><span class="tag">IA</span><span class="tag">Mobile first</span></div>
+      <p>Plataforma que coleta a opinião do cliente por QR code ou link e organiza tudo num painel, com análise por IA.</p>
+      <dl>
+        <dt>Problema</dt><dd>Empresas perdem feedback valioso porque ele raramente chega a quem decide. E o gestor não tem tempo de ler cada comentário.</dd>
+        <dt>O que desenhei</dt><dd>A pesquisa que o cliente responde em segundos, um link por área do negócio, o painel com volume e nota por período, a lista de opiniões com filtros e um agente de IA que aponta a área de destaque e a que precisa de atenção.</dd>
+        <dt>Decisões de produto</dt><dd>Separar por área para cada gestor ver a sua parte. Resumir com IA para quem não tem tempo de ler tudo. Base de conhecimento por segmento para mostrar o que costuma dar errado em cada tipo de negócio.</dd>
+      </dl>
+      <div class="result"><b>De 41 para 59 avaliações</b><span>No Google: 41 em 12 meses antes; 59 em 5 semanas depois, numa clínica de neurologia em Brasília, com a Klientti e uma campanha interna.</span></div>
+      <a class="extlink" href="https://klientti.com/funcionalidades">klientti.com ↗</a>
+    </div>
+    <div class="shots">
+      <figure class="wide clip phones"><div class="ph"><img src="img/k-ph1.png" alt="Pesquisa da Klientti no celular, tela inicial" loading="lazy"><img src="img/k-ph2.png" alt="Pesquisa com nota Excelente" loading="lazy"><img src="img/k-ph3.png" alt="Pesquisa com nota Péssimo" loading="lazy"></div><figcaption>A pesquisa que o cliente responde: um controle deslizante que muda cor e rosto conforme a nota.</figcaption></figure>
+      <figure class="wide clip"><img src="img/k-site.jpg" alt="Página de funcionalidades do site da Klientti" loading="lazy"><figcaption>Site do produto: da coleta à ação, numa ferramenta só.</figcaption></figure>
+      <figure class="clip"><img src="img/k-painel.jpg" alt="Painel com estatísticas dos últimos 7 dias" loading="lazy"><figcaption>Painel: volume por dia e nota média em 7, 15 ou 30 dias.</figcaption></figure>
+      <figure class="clip"><img src="img/k-agente.jpg" alt="Agente de IA com score, tendência e áreas" loading="lazy"><figcaption>Agente de IA: score, tendência e onde agir primeiro.</figcaption></figure>
+      <figure class="clip"><img src="img/k-opinioes.jpg" alt="Lista de opiniões com filtros e botão de Análise de IA" loading="lazy"><figcaption>Opiniões com filtro por área e nota, e análise por IA.</figcaption></figure>
+      <figure class="clip"><img src="img/k-planos.jpg" alt="Página de planos da Klientti" loading="lazy"><figcaption>Planos com teste grátis, sem cartão.</figcaption></figure>
+    </div>
+  </article>
+
+  <article class="case">
+    <div class="txt rv">
+      <div class="role">Produto e UX/UI · Customer Hub para a PSA</div>
+      <h3>Plataforma PSA</h3>
+      <div class="meta"><span class="tag">SaaS</span><span class="tag">CRM</span><span class="tag">Streaming</span><span class="tag">IA</span><span class="tag">Design system</span></div>
+      <p>Plataforma para palestrantes profissionais organizarem a carreira: vender palestras, encontrar oportunidades, estudar e melhorar o posicionamento com IA. Protótipo navegável com mais de 60 telas.</p>
+      <dl>
+        <dt>Problema</dt><dd>O palestrante cuida de vendas, agenda, conteúdo e marca em ferramentas soltas, e a empresa queria reunir tudo num só lugar, com planos pagos.</dd>
+        <dt>O que desenhei</dt><dd>Um CRM em Kanban com o pipeline de cada palestra e uma página pública de captação; a lista de oportunidades com filtros e candidatura; o PSA Play, um streaming de treinamentos com séries, catálogo e player; e três assistentes de IA, cada um especializado numa frente (posicionamento, storytelling e vendas), que geram entregáveis para baixar.</dd>
+        <dt>Decisões de produto</dt><dd>Um único componente de paywall usado em cards, catálogo e player, para a compra parecer a mesma em todo lugar. Filtros do catálogo guardados na URL, para dar para compartilhar uma busca. O consumo de créditos sempre visível no topo das telas de IA.</dd>
+      </dl>
+    </div>
+    <div class="shots">
+      <figure class="wide clip"><img src="img/p-crm.jpg" alt="CRM com potencial total, negócios abertos e fechados" loading="lazy"><figcaption>CRM: o valor do pipeline em três números, antes do quadro.</figcaption></figure>
+      <figure class="clip"><img src="img/p-kanban.jpg" alt="Quadro Kanban de demandas de palestras" loading="lazy"><figcaption>Kanban com colunas configuráveis.</figcaption></figure>
+      <figure class="clip"><img src="img/p-oport.jpg" alt="Lista de oportunidades de palestras com filtros" loading="lazy"><figcaption>Oportunidades com status e candidatura.</figcaption></figure>
+      <figure class="wide clip"><img src="img/p-play.jpg" alt="Página inicial do PSA Play com série em destaque" loading="lazy"><figcaption>PSA Play: séries e aulas, com acesso gratuito ou pago.</figcaption></figure>
+      <figure class="clip"><img src="img/p-ias.jpg" alt="Escolha entre três assistentes de IA" loading="lazy"><figcaption>Três assistentes de IA com personagens próprios.</figcaption></figure>
+      <figure class="clip"><img src="img/p-clara.jpg" alt="Conversa com a assistente CLARA e lista de entregáveis" loading="lazy"><figcaption>Conversa com entregáveis ao lado.</figcaption></figure>
+    </div>
+  </article>
+
+  <article class="case">
+    <div class="txt rv">
+      <div class="role">Produto, UX/UI e conteúdo · projeto próprio</div>
+      <h3>Primeira Chave</h3>
+      <div class="meta"><span class="tag">Fintech</span><span class="tag">Simulador</span><span class="tag">UX Writing</span><span class="tag">Ilustração</span></div>
+      <p>Guia e simulador para quem vai financiar o primeiro imóvel, com as regras da Caixa explicadas sem juridiquês.</p>
+      <dl>
+        <dt>Problema</dt><dd>Quem compra o primeiro imóvel não entende o que o banco vai aprovar, quanto precisa de entrada nem qual é o próximo passo. Os simuladores dos bancos devolvem números sem explicação.</dd>
+        <dt>O que desenhei</dt><dd>Um simulador de 4 perguntas que aceita "não sei" como resposta, sem cadastro. O resultado vem numa frase ("Hoje, cabe um imóvel de até…"), com sinais de semáforo para parcela, entrada e nome, uma lista do que fazer agora e um painel para ajustar os números na hora.</dd>
+        <dt>Arquitetura</dt><dd>Todo o conteúdo organizado numa jornada de 5 fases, do "quanto posso comprar?" ao "como pago menos?", com um personagem ilustrado que acompanha cada etapa.</dd>
+      </dl>
+      <a class="extlink" href="https://primeirachave.com.br/">primeirachave.com.br ↗</a>
+    </div>
+    <div class="shots">
+      <figure class="wide clip"><img src="img/pc-resultado.jpg" alt="Resultado do simulador com valor do imóvel e próximos passos" loading="lazy"><figcaption>Resultado do simulador: a resposta em uma frase, o próximo passo e o ajuste ao vivo.</figcaption></figure>
+      <figure class="clip"><img src="img/pc-hero.jpg" alt="Página inicial da Primeira Chave" loading="lazy"><figcaption>Página inicial.</figcaption></figure>
+      <figure class="clip"><img src="img/pc-fases.jpg" alt="Jornada da compra em 5 fases com ilustrações" loading="lazy"><figcaption>A compra em 5 fases.</figcaption></figure>
+    </div>
+  </article>
+
+  <article class="case">
+    <div class="txt rv">
+      <div class="role">UX de funil · Customer Hub</div>
+      <h3>Quizzes de orçamento</h3>
+      <div class="meta"><span class="tag">Fluxo de conversão</span><span class="tag">UX Writing</span><span class="tag">Qualificação de leads</span><span class="tag">Dashboard</span></div>
+      <p>Em vez de um formulário longo, uma pergunta por tela. O quiz monta o pedido, qualifica o lead e só pede o contato no fim.</p>
+      <dl>
+        <dt>Problema</dt><dd>O formulário de orçamento afastava quem ainda não sabia especificar o produto, e o pedido chegava incompleto para o comercial.</dd>
+        <dt>CIR Gráfica, no ar</dt><dd>Sete etapas: produto, quantidade, arte, acabamento, prazo, valor e contato. Barra de progresso, botão de voltar, respostas que avançam com um toque e um resumo do pedido antes do envio. Cada etapa tem uma frase que tira o peso da decisão, como "Sem problema se ainda não estiver pronta".</dd>
+        <dt>Consultoria de carreira, em proposta</dt><dd>Um quiz que separa pessoas e empresas logo na primeira pergunta e envia o lead classificado ao WhatsApp e a um dashboard por canal, público e página.</dd>
+      </dl>
+      <a class="extlink" href="https://cidades.cirgrafica.com.br/">cidades.cirgrafica.com.br ↗</a>
+    </div>
+    <div class="shots">
+      <figure class="wide clip"><img src="img/c-q1.jpg" alt="Primeira etapa do quiz: tipo de produto" loading="lazy"><figcaption>Etapa 1: o tipo de produto, com ícones.</figcaption></figure>
+      <figure class="clip"><img src="img/c-q2.jpg" alt="Etapa de quantidade com barras de volume" loading="lazy"><figcaption>Quantidade, com barras que mostram o volume.</figcaption></figure>
+      <figure class="clip"><img src="img/c-q3.jpg" alt="Etapa sobre arte para impressão" loading="lazy"><figcaption>Arte: inclusive "criada com IA".</figcaption></figure>
+      <figure class="clip"><img src="img/c-q4.jpg" alt="Última etapa pedindo nome e WhatsApp" loading="lazy"><figcaption>Contato só no fim, com resumo do pedido.</figcaption></figure>
+      <figure class="clip"><img src="img/q-quiz.jpg" alt="Primeira pergunta do quiz da consultoria" loading="lazy"><figcaption>Consultoria: o público se separa na entrada.</figcaption></figure>
+      <figure class="wide clip"><img src="img/q-leads.jpg" alt="Tabela do dashboard de leads por canal" loading="lazy"><figcaption>Dashboard de leads por canal, público e página. Números fictícios.</figcaption></figure>
+    </div>
+  </article>
+</div></section>
+
+<section class="band dark" id="como"><div class="wrap">
+  <div class="head rv">
+    <h2>Do Figma ao <em>produto no ar</em></h2>
+    <p>CX é minha base, mas o trabalho vai além dela. Desenho, prototipo com IA e organizo o produto como um sistema, não como telas soltas.</p>
+  </div>
+  <div class="flow rv" id="flow" aria-label="Fluxo de trabalho"></div>
+  <div class="pillars">
+    <div class="pillar rv">
+      <h3>Figma e prototipação</h3>
+      <p>Fluxos, telas e componentes no Figma. Protótipos navegáveis no Figma Make, como a Plataforma PSA, com mais de 60 telas, estados vazios, paywall e versão mobile.</p>
+      <ul><li>UI e design de interação</li><li>Componentes e design system</li><li>Protótipos para testar com usuários</li></ul>
+    </div>
+    <div class="pillar rv">
+      <h3>Criação com IA</h3>
+      <p>Uso IA como ferramenta de design e de construção: do protótipo em código ao site no ar, com Claude Code e Figma Make. Também desenho produtos com IA dentro, como o agente da Klientti e os assistentes da PSA.</p>
+      <ul><li>Protótipos em React gerados e refinados com IA</li><li>Sites e ferramentas construídos com Claude Code</li><li>UX de assistentes: personagens, créditos, entregáveis</li></ul>
+    </div>
+    <div class="pillar rv">
+      <h3>Arquitetura de produto</h3>
+      <p>Antes da tela, o mapa: rotas e navegação, modelo de dados, sitemap, planos e o que fica para depois. É o que permite um time construir sem se perder.</p>
+      <ul><li>Mapas de navegação e de rotas documentados</li><li>Sitemaps e lançamento em fases</li><li>Planos, paywall e roadmap do que fica "em breve"</li><li>Arquitetura da informação em escala, com páginas por cidade e tema</li></ul>
+    </div>
+    <div class="pillar rv">
+      <h3>Dados e medição</h3>
+      <p>Dashboards para saber se a mudança funcionou: avaliações, leads por canal, performance de campanhas. Design que se mede.</p>
+      <ul><li>Painéis de produto e de cliente</li><li>Voz do cliente e análise de feedback com IA</li><li>Métricas de conversão por etapa</li></ul>
+    </div>
+  </div>
+  <div class="tools rv" id="tools"></div>
+</div></section>
+
+<section class="band" id="sites"><div class="wrap">
+  <div class="head rv">
+    <h2>Sites</h2>
+    <p>Projetos atendidos pela Customer Hub, de clínicas e escritórios a festivais de dança. Passe o mouse para ver em cor.</p>
+  </div>
+  <div class="chips rv" id="chips" role="group" aria-label="Filtrar sites por segmento"></div>
+  <div class="gal" id="gal"></div>
+</div></section>
+
+<section class="band" id="prototipos" style="padding-top:0"><div class="wrap">
+  <div class="head rv">
+    <h2>Protótipos <em>e ferramentas</em></h2>
+    <p>Produtos que prototipei para validar ideias ou resolver problemas de clientes. Os desenhos são esquemas das telas.</p>
+  </div>
+  <div class="grid rv" id="protos"></div>
+</div></section>
+
+<section class="band" id="sobre" style="background:var(--soft)"><div class="wrap">
+  <div class="two">
+    <div class="rv">
+      <h2 style="font-size:clamp(36px,4.6vw,64px)">Como eu <em>trabalho</em></h2>
+      <p class="mute" style="margin-top:18px">Passei 4 anos olhando os principais motivos de contato de uma conta digital com milhões de clientes. Isso mudou meu jeito de desenhar: começo pelo que o cliente está dizendo, não pela tela.</p>
+      <div class="steps">
+        <div class="step"><h3>Ouvir</h3><p>Voz do cliente, motivos de contato, avaliações e dados de uso.</p></div>
+        <div class="step"><h3>Mapear</h3><p>Jornada, pontos de atrito e o que já funciona.</p></div>
+        <div class="step"><h3>Prototipar</h3><p>Fluxos e telas navegáveis, rápido, para testar com gente real.</p></div>
+        <div class="step"><h3>Medir</h3><p>Dashboards para ver se a mudança funcionou e o que ajustar.</p></div>
+      </div>
+    </div>
+    <div class="rv">
+      <h2 style="font-size:clamp(36px,4.6vw,64px)">Trajetória</h2>
+      <div class="tl">
+        <div><b>Klientti<small>Founder &amp; Product Designer</small></b><span>2025 até hoje</span></div>
+        <div><b>Customer Hub<small>UX/UI Designer, consultoria</small></b><span>2024 até hoje</span></div>
+        <div class="hl"><b>PagBank <i class="star" aria-label="Destaque">★</i><small>Customer Experience e melhoria contínua</small></b><span>2020 a 2024</span></div>
+        <div><b>Tilix Digital<small>UX/UI Designer do MVP e Head de CX</small></b><span>2017 a 2020</span></div>
+        <div><b>Territory Eyewear e Acelera Digital<small>Founder, UX/UI e e-commerce</small></b><span>2013 a 2017</span></div>
+        <div><b>Raddar Digital Media e Ab Sistemas<small>Web design, UX/UI e arquitetura da informação</small></b><span>2010 a 2016</span></div>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<footer class="band dark" id="contato"><div class="wrap">
+  <div class="kicker rv">Aberto a uma posição full-time em time de produto</div>
+  <h2 class="rv">Vamos <em>conversar?</em></h2>
+  <div class="cta rv">
+    <a class="btn" href="https://www.linkedin.com/in/brunostersa/">Falar pelo LinkedIn <span>↗</span></a>
+  </div>
+  <div class="fine"><span>Bruno Stersa · Product Designer</span><span>linkedin.com/in/brunostersa</span></div>
+</div></footer>
+
+<script>
+{
+const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* marquee */
+const M=["Product Design","UX/UI","Figma","Prototipação com IA","Arquitetura de produto","Customer Experience","Design system","Dashboards","Figma Make","Claude Code"];
+document.getElementById("track").innerHTML=[...M,...M].map(t=>`<span>${t}</span>`).join("");
+
+/* flow + tools */
+const F=["Voz do cliente","Figma","Protótipo com IA","Produto no ar","Dados"];
+document.getElementById("flow").innerHTML=F.map((t,i)=>`<span class="${i==2?"hot":""}">${t}</span>`).join('<i aria-hidden="true">→</i>');
+const T=["Figma","Figma Make","Claude e Claude Code","HTML, CSS e JavaScript","React e Tailwind (via Make)","WordPress e Elementor","Google Search Console","Google Ads"];
+document.getElementById("tools").innerHTML=T.map(t=>`<span>${t}</span>`).join("");
+
+/* sites */
+const S=[
+ ["renove","renovedermatologia.com.br","Clínica de dermatologia","Saúde"],
+ ["bnc","brasilianeuroclinica.com.br","Clínica neurológica","Saúde"],
+ ["medplastic","hospitalmedplastic.com","Hospital e centro cirúrgico","Saúde"],
+ ["busta","bustaeamaraladvogados.com.br","Escritório de advocacia","Negócios"],
+ ["cidades","cidades.cirgrafica.com.br","Gráfica, atendimento nacional","Negócios"],
+ ["cirgrafica","cirgrafica.com.br","Gráfica","Negócios"],
+ ["gav","gavresorts.com.br","Resorts","Negócios"],
+ ["asg","asgexecutivo.com.br","Transporte executivo","Negócios"],
+ ["oxygen","oxygencapital.com.br","Soluções de crédito","Negócios"],
+ ["psa","profissionaissa.com.br","Agência de palestrantes","Eventos"],
+ ["sax","saxcoffee.com.br","Espaço para eventos","Eventos"],
+ ["fohat","fohat.org.br","Companhia de dança, site bilíngue","Dança"],
+ ["dancarte","studiodancarte.com.br","Escola de dança","Dança"],
+ ["dancagoias","dancagoias.com.br","Festival de dança","Dança"],
+ ["cbdd","cbddkidsgoiania.com.br","Festival de dança infantil","Dança"]
+];
+const gal=document.getElementById("gal"),chips=document.getElementById("chips");
+gal.innerHTML=S.map(([k,d,s,c])=>`<a class="site rv" data-c="${c}" href="https://${d}/"><div class="frame"><img src="img/s-${k}.jpg" alt="Página inicial de ${d}" loading="lazy"></div><div class="cap"><strong>${d}</strong><span>${s}</span></div></a>`).join("");
+const cats=["Todos","Saúde","Negócios","Eventos","Dança"];
+chips.innerHTML=cats.map((c,i)=>`<button type="button" aria-pressed="${i==0}" data-c="${c}">${c}</button>`).join("");
+chips.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;
+ chips.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b));
+ gal.querySelectorAll(".site").forEach(s=>s.classList.toggle("hide",b.dataset.c!="Todos"&&s.dataset.c!=b.dataset.c));});
+
+/* prototypes, monochrome sketches */
+const P=[
+ {t:"CondoPago",s:"Cobrança de condomínio",d:"Pagar a taxa como quem escolhe assento no cinema: o morador marca os meses numa grade e escolhe PIX, boleto ou cartão.",
+  li:["Fluxo do morador em 4 etapas: lote, meses, pagamento, confirmação","Painel do síndico com mapa de inadimplência dos 34 lotes","Landing, login e área do morador navegáveis"],k:"seats"},
+ {t:"VisitaObra",s:"Visitas em obras",d:"Sistema simples para construtoras acompanharem visitas de corretores e clientes nos empreendimentos.",
+  li:["Dashboard com visitas por semana e tipo de visitante","Cadastro rápido de visita","Exportação em CSV"],k:"bars"},
+ {t:"PostMagic",s:"Criador de posts com IA",d:"Ferramenta no navegador para a equipe de uma clínica criar posts de Instagram com texto gerado por IA.",
+  li:["Prévia ao vivo ao lado do editor em abas","Formatos, gradientes e marca aplicados","Exportação em PNG"],k:"post"},
+ {t:"Relatórios de performance",s:"Dashboards para clientes",d:"Relatórios de Google e Meta Ads gerados com dados do Windsor.ai e IA, feitos para virar PDF sem perder a leitura.",
+  li:["Investimento, leads e custo por lead no mesmo gráfico","Rótulos sempre visíveis, prontos para impressão","Um modelo para vários clientes"],k:"combo"},
+ {t:"Arquitetura do site PSA",s:"Sitemap e fases",d:"Mapa do site e cronograma de reconstrução em duas fases para uma empresa de palestras com várias unidades de negócio.",
+  li:["Sitemap com unidades de negócio, palestrantes e glossário","Fases de lançamento e responsáveis","Base para o time de desenvolvimento"],k:"tree"}
+];
+const I="currentColor",L="var(--line)",K="var(--card)";
+const art={
+ seats:()=>{let g="";const st=[2,2,2,2,1,1,0,0,0,0,0,0];for(let i=0;i<12;i++){const x=70+(i%6)*62,y=50+Math.floor(i/6)*60;g+=`<rect x="${x}" y="${y}" width="48" height="44" rx="10" fill="${st[i]==1?I:st[i]==2?I:"none"}" opacity="${st[i]==2?.18:1}" stroke="${I}" stroke-opacity="${st[i]==0?.35:0}" stroke-width="1.5"/>`}return g+`<rect x="70" y="182" width="358" height="30" rx="15" fill="${I}"/>`},
+ bars:()=>{const v=[40,62,48,80,70,96,58];return v.map((h,i)=>`<rect x="${78+i*50}" y="${200-h*1.4}" width="30" height="${h*1.4}" rx="4" fill="${I}" opacity="${i==5?1:.2}"/>`).join("")+`<line x1="60" y1="202" x2="440" y2="202" stroke="${I}" stroke-opacity=".3" stroke-width="1.5"/>`},
+ post:()=>`<rect x="70" y="34" width="180" height="180" rx="12" fill="${I}"/>`+[0,1,2,3].map(i=>`<rect x="${276+i*40}" y="40" width="34" height="16" rx="8" fill="${I}" opacity="${i?.2:1}"/>`).join("")+[0,1,2,3].map(i=>`<rect x="276" y="${76+i*30}" width="${150-i*20}" height="12" rx="6" fill="${I}" opacity=".2"/>`).join(""),
+ combo:()=>{const v=[50,70,60,90,80,110];const ys=[150,128,138,96,104,72];return v.map((h,i)=>`<rect x="${80+i*58}" y="${200-h}" width="34" height="${h}" rx="4" fill="${I}" opacity=".18"/>`).join("")+`<polyline points="${ys.map((y,i)=>`${97+i*58},${y}`).join(" ")}" fill="none" stroke="${I}" stroke-width="2.5"/>`+ys.map((y,i)=>`<circle cx="${97+i*58}" cy="${y}" r="5" fill="${I}"/>`).join("")},
+ tree:()=>{let g=`<rect x="200" y="30" width="100" height="34" rx="17" fill="${I}"/><path d="M250 64V100M90 100H410" stroke="${I}" stroke-opacity=".35" stroke-width="1.5"/>`;[90,197,303,410].forEach((x,i)=>{g+=`<path d="M${x} 100V122" stroke="${I}" stroke-opacity=".35" stroke-width="1.5"/><rect x="${x-44}" y="122" width="88" height="30" rx="15" fill="none" stroke="${I}" stroke-opacity=".5" stroke-width="1.5"/>`;if(i%2==0)g+=`<rect x="${x-36}" y="168" width="72" height="24" rx="12" fill="${I}" opacity=".15"/>`});return g}
+};
+document.getElementById("protos").innerHTML=P.map(p=>`<article class="proto"><svg viewBox="0 0 500 240" role="img" aria-label="Esquema das telas de ${p.t}">${art[p.k]()}</svg><div class="in"><div class="role">${p.s}</div><h3>${p.t}</h3><p>${p.d}</p><ul>${p.li.map(x=>`<li>${x}</li>`).join("")}</ul></div></article>`).join("");
+
+/* reveal on scroll */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{threshold:.12,rootMargin:"0px 0px -6% 0px"});
+document.querySelectorAll(".rv,.clip").forEach((el,i)=>{if(reduce){el.classList.add("in")}else{io.observe(el)}});
+
+/* counters */
+const cio=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;const el=e.target,n=+el.dataset.n,s=el.dataset.s;cio.unobserve(el);if(reduce)return;const t0=performance.now();
+ const step=t=>{const k=Math.min(1,(t-t0)/1400),v=Math.round(n*(1-Math.pow(1-k,3)));el.textContent=v+s;if(k<1)requestAnimationFrame(step)};requestAnimationFrame(step)}),{threshold:.6});
+document.querySelectorAll("[data-n]").forEach(el=>cio.observe(el));
+
+/* lightbox */
+const lb=document.getElementById("lb"),lbi=lb.querySelector("img"),lbp=lb.querySelector("p");let last=null;
+document.querySelectorAll(".shots img").forEach(img=>{img.tabIndex=0;img.setAttribute("role","button");
+ const open=()=>{last=img;lbi.src=img.src;lbi.alt=img.alt;lb.classList.toggle("land",img.naturalWidth>img.naturalHeight*1.2);lb.scrollLeft=0;lbp.textContent=img.closest("figure")?.querySelector("figcaption")?.textContent||"";if(lb.classList.contains("land")&&innerWidth<600)lbp.textContent+=" · arraste para o lado para ver tudo";lb.classList.add("on");document.body.style.overflow="hidden";lb.querySelector("button").focus()};
+ img.addEventListener("click",open);img.addEventListener("keydown",e=>{if(e.key=="Enter"||e.key==" "){e.preventDefault();open()}})});
+const close=()=>{lb.classList.remove("on","land");document.body.style.overflow="";last&&last.focus()};
+lb.addEventListener("click",close);addEventListener("keydown",e=>{if(e.key=="Escape"&&lb.classList.contains("on"))close()});
+
+/* progress bar + hero parallax */
+const bar=document.getElementById("bar"),fl=[...document.querySelectorAll(".float img")];
+let mx=0,my=0,sy=0,raf=0;
+const paint=()=>{raf=0;const h=document.documentElement.scrollHeight-innerHeight;bar.style.transform=`scaleX(${h>0?scrollY/h:0})`;
+ if(!reduce)fl.forEach(img=>{const d=+img.dataset.d;img.style.transform=`translate3d(${mx*d}px,${my*d - sy*d/60}px,0)`})};
+const ask=()=>{if(!raf)raf=requestAnimationFrame(paint)};
+addEventListener("scroll",()=>{sy=Math.min(scrollY,innerHeight);ask()},{passive:true});
+addEventListener("pointermove",e=>{mx=(e.clientX/innerWidth-.5);my=(e.clientY/innerHeight-.5);ask()},{passive:true});
+paint();
+}
+</script>
+</body>
+</html>
